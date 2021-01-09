@@ -56,7 +56,7 @@ class CarController {
      * @return all information for the requested vehicle
      */
     @GetMapping("/{id}")
-    Resource<Car> get(@PathVariable Long id) {
+    Resource<Car> get(@PathVariable final Long id) {
         /**
          * HERE: Use the `findById` method from the Car Service to get car information.
          * HERE: Use the `assembler` on that car and return the resulting output.
@@ -74,7 +74,7 @@ class CarController {
      * @throws URISyntaxException if the request contains invalid fields or syntax
      */
     @PostMapping
-    ResponseEntity<?> post(@Valid @RequestBody Car car) throws URISyntaxException {
+    ResponseEntity<?> post(@Valid @RequestBody final Car car) throws URISyntaxException {
         /**
          * HERE: Use the `save` method from the Car Service to save the input car.
          * HERE: Use the `assembler` on that saved car and return as part of the response.
@@ -82,7 +82,7 @@ class CarController {
          */
         final Car savedCar = carService.save(car);
 
-        Resource<Car> resource = carResourceAssembler.toResource(savedCar);
+        final Resource<Car> resource = carResourceAssembler.toResource(savedCar);
         return ResponseEntity
                 .created(new URI(resource.getId().expand().getHref()))
                 .body(resource);
@@ -95,7 +95,7 @@ class CarController {
      * @return response that the vehicle was updated in the system
      */
     @PutMapping("/{id}")
-    ResponseEntity<?> put(@PathVariable Long id, @Valid @RequestBody Car car) {
+    ResponseEntity<?> put(@PathVariable final Long id, @Valid @RequestBody final Car car) {
         /**
          * HERE: Set the id of the input car object to the `id` input.
          * HERE: Save the car using the `save` method from the Car service
@@ -104,8 +104,8 @@ class CarController {
          */
 
         car.setId(id);
-        Resource<Car> resource = carResourceAssembler.toResource(carService.save(car));
-        return ResponseEntity.ok(resource);
+        final Resource<Car> carResource = carResourceAssembler.toResource(carService.save(car));
+        return ResponseEntity.ok(carResource);
     }
 
     /**
@@ -114,7 +114,7 @@ class CarController {
      * @return response that the related vehicle is no longer in the system
      */
     @DeleteMapping("/{id}")
-    ResponseEntity<?> delete(@PathVariable Long id) {
+    ResponseEntity<?> delete(@PathVariable final Long id) {
         /**
          * HERE: Use the Car Service to delete the requested vehicle.
          */

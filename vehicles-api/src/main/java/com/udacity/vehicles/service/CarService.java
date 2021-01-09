@@ -46,7 +46,7 @@ public class CarService {
      * @param id the ID number of the car to gather information on
      * @return the requested car's information, including location and price
      */
-    public Car findById(Long id) {
+    public Car findById(final Long id) {
         /**
          * HERE: Find the car by ID from the `repository` if it exists.
          *   If it does not exist, throw a CarNotFoundException
@@ -70,8 +70,8 @@ public class CarService {
          * meaning the Maps service needs to be called each time for the address.
          */
 
-        Optional<Car> carOP = repository.findById(id);
-        Car car = carOP.orElseThrow(CarNotFoundException::new);
+        final Optional<Car> carOP = repository.findById(id);
+        final Car car = carOP.orElseThrow(CarNotFoundException::new);
 
         car.setLocation(mapsClient.getAddress(car.getLocation()));
         car.setPrice(priceClient.getPrice(id));
@@ -85,7 +85,7 @@ public class CarService {
      * @param car A car object, which can be either new or existing
      * @return the new/updated car is stored in the repository
      */
-    public Car save(Car car) {
+    public Car save(final Car car) {
         if (car.getId() != null) {
             return repository.findById(car.getId())
                     .map(carToBeUpdated -> {
@@ -103,7 +103,7 @@ public class CarService {
      *
      * @param id the ID number of the car to delete
      */
-    public void delete(Long id) {
+    public void delete(final Long id) {
         /**
          * HERE: Find the car by ID from the `repository` if it exists.
          *   If it does not exist, throw a CarNotFoundException
@@ -114,8 +114,8 @@ public class CarService {
          * HERE: Delete the car from the repository.
          */
 
-        Optional<Car> carOptional = repository.findById(id);
-        Car car = carOptional.orElseThrow(CarNotFoundException::new);
+        final Optional<Car> carOptional = repository.findById(id);
+        final Car car = carOptional.orElseThrow(CarNotFoundException::new);
         repository.delete(car);
     }
 }
